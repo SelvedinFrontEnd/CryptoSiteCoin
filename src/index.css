@@ -46,6 +46,133 @@ h1, h2, h3, h4, h5, h6 {
   isolation: isolate;
 }
 
+/* AuthPage background styling */
+.auth-page {
+  background: linear-gradient(135deg, #141e30, #243b55); /* Dark gradient background for AuthPage */
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #f0f0f0;
+  padding: 20px;
+}
+
+/* Center the auth form */
+.auth-form {
+  width: 400px;
+  background: white; /* White background for the form */
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  padding: 20px 30px;
+}
+
+/* Form styles */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group > label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.form-group > input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  color: #333;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group > input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: #4e9f3d;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Button styling */
+.auth-button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #4e9f3d, #11998e);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.auth-button:hover {
+  background: linear-gradient(135deg, #11998e, #4e9f3d);
+  box-shadow: 0 8px 25px rgba(18, 157, 107, 0.5);
+}
+
+
+.log-sign {
+  font-size: 14px;
+  color: #4e9f3d;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+.log-sign:hover {
+  color: #11998e;
+}
+
+.have-an-acc {
+  color: black;
+}
+
+.auth-footer {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.error {
+  color: black;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .auth-form {
+      width: 90%;
+      padding: 20px;
+  }
+}
+
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
 @font-face {
   font-family: "Robot";
   src: url(Roboto-Regular.ttf);
@@ -576,7 +703,7 @@ div .hero-title {
 .crypto-item {
   display: grid;
   align-items: center;
-  grid-template-columns: 1.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
+  grid-template-columns: 1.5fr 1fr;
   grid-template-rows: none;
   justify-content: center;
   gap: 3rem;
@@ -584,6 +711,8 @@ div .hero-title {
   background-color: #fff;
   width: 100%;
   justify-content: space-between;
+  z-index: 5;
+  cursor: pointer;
 }
 
 /* Crypto Names Section */
@@ -594,8 +723,8 @@ div .hero-title {
 }
 
 .crypto-icon img {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
 }
 
@@ -607,7 +736,7 @@ div .hero-title {
 .crypto-name {
   font-size: 1rem;
   font-weight: bold;
-  color: #333;
+  color: black;
 }
 
 .crypto-short-name {
@@ -615,14 +744,28 @@ div .hero-title {
   color: #888;
 }
 
+.search-results {
+  margin-top: 10px;
+}
+
+.coin-result {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.coin-icon {
+  margin-right: 10px;
+}
+
 /* Crypto Details Section */
 .crypto-price {
     font-size: 1rem;
-    font-weight: normal;
     color: #000;
     text-align: left;
 }
 .crypto-change {
+  display: none;
   font-size: 0.9rem;
   color: #ff4757;
 }
@@ -673,10 +816,189 @@ div .hero-title {
   border-color: rgba(0, 0, 0, 0.7) transparent transparent transparent;
 }
 
+.negative-arrow {
+  color: red;
+}
 
+.positive-arrow {
+  color: green;
+}
+
+.crypto-change {
+  color: green;
+}
+
+.crypto-change-negative {
+  display: none;
+  color: red;
+  font-size: 0.9rem;
+}
+
+.crypto-header {
+  font-weight: 600;
+  margin-left: 1rem;
+}
+
+.crypto-header div {
+  color: #000;
+}
+
+.coin-dropdown-wrapper {
+  position: absolute;
+  left: 0;
+  z-index: 600;
+  max-height: 400px;
+  width: 100%;
+  top: 4.5rem;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(91, 97, 110, 0.2);
+  background-color: white;
+  border-radius: 1rem; 
+  overflow: hidden; /* Ensure the border-radius is respected */
+}
+
+.coin-dropdown {
+  max-height: 400px;
+  overflow-y: auto; /* Scroll only vertically within */
+}
+
+.coin-dropdown::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+}
+
+.coin-dropdown::-webkit-scrollbar-track {
+  background-color: white; /* Matches the container background */
+  border-radius: 1rem; /* Applies rounded corners to the track */
+}
+
+.coin-dropdown::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+  border-radius: 1rem;
+}
+
+.searched-coin {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.searched-coin:hover {
+  background-color: rgb(219, 217, 217);
+}
+
+.coin-dropdown-hidden {
+  display: none;
+}
+
+.searched-short {
+  margin-left: auto;
+}
+
+.coin-name {
+  font-weight: 600;
+}
+
+.coin-dropdown-wrapper-hidden {
+  display: none;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 1.5rem;
+}
+
+.prev-button,
+.next-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.prev-button:disabled,
+.next-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  font-size: 1rem;
+  color: #333;
+}
+
+.crypto-sec3 {
+  display: flex;
+  padding: 3rem;
+  background-color: rgb(0, 82, 255);
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.crypto-flex > .crypto-item:hover {
+  background-color: rgba(0, 0, 0, 0.09);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.crypto-24hvolume {
+  display: none;
+}
+  
+.crypto-chart {
+  display: none;
+}
+  
+.crypto-3-img {
+  display: none;
+}
+
+.btn3 {
+  width: 150px;
+  height: 60px;
+  margin: 0;
+}
+
+.h2-white {
+  color: white;
+  font-weight: 600;
+}
+
+.crypto3-flex {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+
+}
 /* Media Queries */
 
 @media screen and (min-width: 600px) {
+  .crypto-change {
+    display: block;
+  }
+
+  .btn3 {
+    align-self: start;
+    
+  }
+
+  .crypto-change-negative {
+    display: block;
+  }
+
+  .crypto-item {
+    grid-template-columns: 1.5fr 0.5fr 0.5fr;
+  }
+
   .search-box {
     width: 550px;
   }
@@ -730,6 +1052,18 @@ div .hero-title {
   .search-container {
     flex-direction: row;
     justify-content: space-between;
+  }
+  
+  .btn3 {
+    width: 200px;
+  }
+
+  .crypto-24hvolume {
+    display: block;
+  }
+
+  .crypto-item {
+    grid-template-columns: 1.5fr 0.5fr 0.5fr 0.5fr;
   }
 
   .search-box {
@@ -863,7 +1197,11 @@ div .hero-title {
 
   .basic-title {
     font-size: 28px;
-    
+  }
+
+  .btn3 {
+    width: 400px;
+    height: 60px;
   }
 
   .basic:hover .basic-title {
@@ -900,8 +1238,40 @@ div .hero-title {
 
 
 @media screen and (min-width: 1090px) {
+  .crypto-item {
+    grid-template-columns: 1.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
+  }
+
+  .crypto3-flex {
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+  }
+
+  .btn3 {
+    align-self: flex-start;
+  }
+  .crypto-sec3 {
+    gap: 2rem;
+    padding: 4rem 2rem;
+  }
+
+  .crypto-3-img {
+    display: block;
+    width: 400px;
+  }
+
+  .crypto-chart {
+    display: block;
+  }
+
   .main-title {
     font-size: 48px;
+  }
+
+  .btn3 {
+    width: 400px;
+    height: 60px;
   }
 
   .main-desc {
@@ -1141,12 +1511,320 @@ div .hero-title {
   color: #888;
 }
 
+.profile-page {
+  margin: 5rem;
+  margin-left: 20rem;
+}
+
+.profile-header {
+  display: flex;
+  gap: 1rem;
+}
+
+.user-avatar {
+  width: 65px;
+  height: 65px;
+}
+
+.user-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.uid-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 4rem;
+  color: gray;
+}
+
+.uid {
+  color: black;
+  font-size: 14px;
+}
+
+.username {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.header-balance {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+  color: gray;
+}
+
+.balance-amount {
+  color: black;
+  font-size: 14px;
+}
+
+.profile-button {
+  background-color: lightgray;
+  width: fit-content;
+  height: fit-content;
+  border-radius: 0.5rem;
+  border: none;
+  padding: 0.3rem 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.profile-button:hover {
+  background-color: rgba(211, 211, 211, 0.5);
+}
+
+.edit-btn {
+  margin-left: auto;
+}
+
+.estimated-balance {
+  margin-top: 3rem;
+  border: 1px solid lightgray;
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.valutes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.balance-header {
+  display: flex;
+  gap: 1rem;
+}
+
+.deposit {
+  margin-left: auto;
+}
+
+.favorite-coins {
+  margin-top: 3rem;
+  border: 1px solid lightgray;
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+.favorite-coins-header {
+  display: grid;
+  grid-template-columns: 1fr 1.9fr;
+  gap: 1rem;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+  font-weight: 600;
+  padding-left: 3rem;
+}
+
+.favorite-coins-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.favorite-coin {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+
+.remove-from-favorites {
+  background-color: #ff4d4d; /* Red background */
+  border: none;
+  color: white;
+  font-size: 24px; /* Larger text for better visibility */
+  width: 32px; /* Set width and height to make the button a square */
+  height: 32px;
+  border-radius: 50%; /* Circular button */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-left: auto;
+}
+
+.remove-from-favorites:hover {
+  background-color: #ff1a1a; /* Darker red when hovered */
+  transform: scale(1.1); /* Slightly enlarge the button on hover */
+}
+
+.remove-from-favorites:active {
+  background-color: #e60000; /* Even darker red when clicked */
+}
+
+
+.user-activity {
+  margin-top: 3rem;
+  border: 1px solid lightgray;
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-top: 1px solid lightgray;
+  padding-top: 1rem;
+}
+
+.avatar-background {
+  background-color: lightslategrey;
+  border-radius: 0.5rem;
+}
+
+.coin-wrapper {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 2fr 0.5fr;
+  cursor: pointer;
+}
+
+.coin-wrapper:hover {
+  background-color: rgba(0, 0, 0, 0.09);
+  border-radius: 0.5rem;
+}
+
+.crypto-flex {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-avatar {
+  width: 40px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Ensure the modal is above all other content */
+}
+
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 100%;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+}
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-content input {
+    padding: 10px;
+    margin: 10px 0;
+    width: 80%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.modal-title {
+  text-align: center;
+}
+
+.modal-label {
+  align-self: flex-start;
+  margin-left: 3rem;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.form-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.save-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.save-btn:hover {
+    background-color: #0056b3;
+}
+
+.close-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.close-btn:hover {
+    background-color: #c82333;
+}
+
+.modal-content button {
+    width: 48%; /* Adjust the width to make them evenly spaced */
+}
+
+
+
 }
 
 .buttons {
   display: flex;
-  align-items: center;
+  align-items:end;
   gap: 1rem;
 }
 
+.crypto-formated {
+  font-size: 16px;
+}
 
+.current-balance {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.real-value {
+  font-size: 17px;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+}
+
+.negative-percentage {
+  color: red;
+  font-weight: 600;
+  font-size: 18px;
+}

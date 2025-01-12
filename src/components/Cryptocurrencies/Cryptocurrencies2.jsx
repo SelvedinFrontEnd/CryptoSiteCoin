@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import CryptoList from './CryptoList';
 
 function Cryptocurrencies2() {
     const [coins, setCoins] = useState([]);
@@ -15,6 +15,7 @@ function Cryptocurrencies2() {
             .then((response) => response.json())
             .then((data) => {
                 setCoins(data.data.coins);
+                console.log(coins)
             });
     }, []);
 
@@ -48,46 +49,19 @@ function Cryptocurrencies2() {
     return (
         <section className='crypto-sec2'>
             <div className='crypto-title'>Crypto Prices</div>
-            <div className='crypto-list'>
-                {coins.map((coin) => (
-                    <div className='crypto-item' key={coin.uuid}>
-                        <div className='crypto-names-container'>
-                            <div className='crypto-icon'>
-                                <img src={coin.iconUrl} alt='crypto-icon' />
-                            </div>
-                            <div className='crypto-name-flex'>
-                                <div className='crypto-name'>{coin.name}</div>
-                                <div className='crypto-short-name'>{coin.symbol}</div>
-                            </div>
-                        </div>
-                        <div className='crypto-price'>{formatToDollar(coin.price)}</div>
-                        <div className='crypto-change'>{coin.change}%</div>
-                        <div className='crypto-24hvolume'>
-                            ${coin['24hVolume'] ? parseInt(coin['24hVolume']).toLocaleString() : 'N/A'}
-                        </div>
-                        <div className='crypto-chart'>
-                            {coin.sparkline ? (
-                                <ResponsiveContainer width="100%" height={50}>
-                                    <LineChart data={formatSparklineData(coin.sparkline)}>
-                                        <XAxis dataKey="name" hide />
-                                        <YAxis hide />
-                                        <Tooltip content={<CustomTooltip />} />
-                                        <Line 
-                                            type="linear" 
-                                            dataKey="value" 
-                                            stroke={coin.color || "#f7931A"}  // Each coin uses its unique color (or fallback to #f7931A)
-                                            strokeWidth={2} 
-                                            dot={false} 
-                                        />
-                                    </LineChart>
-                                </ResponsiveContainer>
-                            ) : (
-                                <div>No Sparkline Data</div>
-                            )}
-                        </div>
-                    </div>
-                ))}
+            <div className='crypto-item crypto-header'>
+                    <div className='crypto-name bold'>Name</div>
+                    <div className='crypto-price bold cursor-pointer'>Price</div>
+                    <div className='crypto-change bold cursor-pointer'>Change</div>
+                    <div className='crypto-24hvolume bold cursor-pointer'>24h Volume</div>
+                    <div className='crypto-chart bold'>Chart</div>
             </div>
+            <CryptoList 
+            coins={coins} 
+            formatToDollar={formatToDollar} 
+            formatSparklineData={formatSparklineData} 
+            CustomTooltip={CustomTooltip} 
+            />
         </section>
     );
 }

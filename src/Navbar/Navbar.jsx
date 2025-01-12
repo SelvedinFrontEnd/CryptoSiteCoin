@@ -32,13 +32,46 @@ import OnChainKit from "../images/OnChainKit.svg"
 import staking2 from "../images/StakingProd.svg"
 import developerUpsell from "../images/developers_upsell.png"
 import companyUpsell from "../images/company_upsell.png"
-import React from "react";
-import { Link } from "react-router-dom"; // Import Link for navigation
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom"; // Import Link for navigation
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserFriends, faNewspaper, faShieldAlt, faComments, faInfoCircle, faSuitcase, faSun, faMoon, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import learnUpsel from "../images/learn_upsell.png"
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
 function Navbar() {
+  const [user, setUser] = useState(null);
+  const [avatar, setAvatar] = useState(null);
+  const navigate = useNavigate();
+
+  // Initialize Firebase Authentication
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      setUser(currentUser);
+      if (currentUser) {
+        await fetchUserAvatar(currentUser.uid); // Fetch avatar from Firestore
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup subscription on unmount
+  }, []);
+
+  // Fetch avatar from Firestore
+  const fetchUserAvatar = async (uid) => {
+    try {
+      const db = getFirestore();
+      const userDoc = doc(db, 'users', uid); // Adjust collection name as needed
+      const userSnap = await getDoc(userDoc);
+
+      if (userSnap.exists()) {
+        setAvatar(userSnap.data().avatar || null); // 'avatar' should be the field name in Firestore
+      }
+    } catch (error) {
+      console.error('Error fetching user avatar:', error);
+    }
+  };
   return (
     <>
       <nav className="navbar">
@@ -437,8 +470,30 @@ function Navbar() {
             <FontAwesomeIcon icon={faMoon} style={{fontSize:"16px", color: 'black', marginRight: '8px' }} />
           </div>
           
-          <button className="signup">Sign up</button>
-          <button className="signup none">Sign In</button>
+          <div>
+          {user ? (
+            <div
+                onClick={() => navigate('/profile')}
+                
+              >
+                <img
+                  src={avatar || "test"}
+                  alt="User Avatar"
+                  className="navbar-avatar"
+                />
+              </div>
+            ) : (
+              <div>
+                <button
+                  onClick={() => navigate('/auth')}
+                  className="signup "
+                >
+                  Sign Up
+                </button>
+              </div>
+            )}
+          </div>
+          
         </div>
         
         <img className="hamburger" src={hamburger} alt="Hamburger Menu" />

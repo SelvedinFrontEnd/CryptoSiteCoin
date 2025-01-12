@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import TopTradable from "./Toptradable";
-import TopGainers from "./Topgainer";
+import TopTradable from "./TopTradable";
+import TopGainers from "./TopGainer";
 
 
 

@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 
 
 export default function TopGainers({gainImg, gainName, gainPercentage, gainPrice}) {
@@ -12,8 +12,8 @@ export default function TopGainers({gainImg, gainName, gainPercentage, gainPrice
                         <div className="coin-name-grid">{gainName}</div>
                         <div className="price-grid">{formattedPrice}</div>
                         <div className="one-crypto-subgrid">
-                            <FontAwesomeIcon icon={faArrowUp} />
-                            <div className="one-crypto-percentage">{gainPercentage.toFixed(2)}%</div>
+                            <FontAwesomeIcon className={faArrowDown ? "negative-arrow" : "positive-arrow"} icon={gainPercentage < 0 ? faArrowDown : faArrowUp} />
+                            <div className={gainPercentage > 0 ? "one-crypto-percentage" : "negative-percentage"}>{gainPercentage.toFixed(2)}%</div>
                         </div>
                     </div>
         </>
