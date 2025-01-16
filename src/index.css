@@ -979,6 +979,74 @@ div .hero-title {
   align-items: center;
 
 }
+
+.crypto-detail-page {
+  margin: 1rem;
+}
+
+.detail-coin-icon {
+  width: 35px;
+  height: 35px;
+}
+
+.navbar-avatar {
+  width: 40px;
+  height: 40px;
+}
+
+.detail-coin-head {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.detail-coin-name {
+  font-weight: 600;
+}
+
+.detail-coin-shortname {
+  color: lightslategray;
+}
+
+.detail-coin-rank {
+  background-color: rgb(240, 237, 237);
+  font-size: 14px;
+  border-radius: 0.5rem;
+  padding: 0 0.5rem;
+}
+
+.detail-coin-button {
+  background-color: white;
+  width: 100%;
+  border: none;
+  border-radius: 0.5rem;
+  height: 35px;
+  border-top: 1px solid lightgray;
+  border-left: 2px solid lightgray;
+  border-right: 2px solid lightgray;
+  border-bottom: 4px solid lightgray;
+  transition: all 0.3s ease; /* Smooth transition for all changes */
+}
+
+.detail-coin-button:hover {
+  background-color: #f0f0f0; /* Light background on hover */
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1); /* 3D effect on hover */
+  border-top: 1px solid gray;
+  border-left: 2px solid gray;
+  border-right: 2px solid gray;
+  border-bottom: 4px solid gray; /* Change bottom border color on hover */
+  transform: translateY(-2px); /* Slightly lift the button */
+}
+
+.detail-coin-button:focus {
+  outline: none;
+}
+
+.crypto-detail-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 /* Media Queries */
 
 @media screen and (min-width: 600px) {

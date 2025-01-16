@@ -15,6 +15,7 @@ export default function Profile({
     const [favorites, setFavorites] = useState([]); // store favorite coin IDs
     const [favoriteCoins, setFavoriteCoins] = useState([]); // store full coin details
     const [loading, setLoading] = useState(false);
+    const [withdrawError, setWithdrawError] = useState(""); // New state for withdraw error
     const navigate = useNavigate();
     const BTC_TO_USD = 94851.39; // 1 BTC = $94,851.39
 
@@ -266,24 +267,26 @@ export default function Profile({
                                 min="0"
                                 placeholder="Enter amount"
                             />
-                            {error && <div className="error-message">{error}</div>} {/* Display error message */}
+                            {withdrawError && <div className="error-message">{withdrawError}</div>} {/* Display error message */}
                             <div className="form-buttons">
                                 <button 
                                     type="button" 
                                     className="close-btn"
                                     onClick={() => {
                                         setIsWithdrawModalOpen(false);
-                                        setError(""); // Reset error state
+                                        setWithdrawError(""); // Reset error state
                                     }}
                                 >Close
                                 </button>
                                 <button 
                                     type="button" 
                                     className="save-btn"
-                                    onClick={() => {
-                                        handleWithdraw();
+                                    onClick={async () => {
+                                        const error = await handleWithdraw();
                                         if (!error) {
                                             setIsWithdrawModalOpen(false);
+                                        } else {
+                                            setWithdrawError(error);
                                         }
                                     }}
                                 >

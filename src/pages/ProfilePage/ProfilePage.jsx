@@ -137,13 +137,11 @@ export default function ProfilePage() {
         try {
             const withdrawAmount = parseFloat(formData.balance);
             if (isNaN(withdrawAmount) || withdrawAmount <= 0) {
-                setError("Please enter a valid withdraw amount greater than 0.");
-                return;
+                return "Please enter a valid withdraw amount greater than 0.";
             }
 
             if (withdrawAmount < 20) {
-                setError("The minimum withdraw amount is $20.");
-                return;
+                return "The minimum withdraw amount is $20.";
             }
 
             const user = auth.currentUser;
@@ -153,8 +151,7 @@ export default function ProfilePage() {
                     const data = userDoc.data();
                     let currentBalance = data.balance || 0;
                     if (withdrawAmount > currentBalance) {
-                        setError("Insufficient balance.");
-                        return;
+                        return "Insufficient balance.";
                     }
                     const newBalance = currentBalance - withdrawAmount;
                     const now = new Date();
@@ -176,15 +173,14 @@ export default function ProfilePage() {
                         activity: [...(data.activity || []), activityMessage],
                     });
 
-                    setIsWithdrawModalOpen(false);
+                    return null; // No error
                 } else {
-                    setError("User data not found.");
+                    return "User data not found.";
                 }
             }
         } catch (err) {
             console.error("Withdraw failed", err);
-            setError("Failed to withdraw funds.");
-            
+            return "Failed to withdraw funds.";
         }
     };
 
